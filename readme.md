@@ -1,4 +1,4 @@
-Override you DbContext SaveChanges behavior to track changes to select entity types in your applications.
+Override your DbContext SaveChanges behavior to track changes to select entity types in your applications.
 
 This is inspired by [SQL Server change tracking](https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-tracking-sql-server?view=sql-server-ver16), adapted for PostgreSQL and EF Core. There's no Postgres-specific features used however, so it should work with any relational database provider for EF Core.
 
