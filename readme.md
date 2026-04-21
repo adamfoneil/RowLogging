@@ -4,7 +4,7 @@ When porting an application from SQL Server to Postgres, I found there was no fe
 
 Since PostgreSQL has a large ecosystem of libraries and extensions, there's probably something very similar out there already. But since I'm in a DIY mindset to begin with, and there are some limitations of SQL Server Change Tracking I'd like to improve on, I'd like to build my own solution rather than look for a strict "port" of original feature.
 
-Specifically, I'd like to track before/after states of select columns. SQL Server Change Tracking doesn't do that, so I wanted to add first-class support that.
+Specifically, I'd like to track before/after states of select columns. SQL Server Change Tracking doesn't do that, so I wanted to add first-class support for that.
 
 I also want this to be a natural part of my EF Core usage, so that it works transparently behind the `SaveChangeAsync` method.
 
