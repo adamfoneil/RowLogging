@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using RowLogging.Tests.Entities;
 using Testcontainers.PostgreSql;
+using Xunit.Abstractions;
 
 namespace RowLogging.Tests;
 
-public class RowLogConsumerTests : IAsyncLifetime
+public class RowLogConsumerTests(ITestOutputHelper output) : IAsyncLifetime
 {
 	private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder().Build();
 	private DbContextOptions<AppDbContext> _options = default!;
@@ -24,7 +25,7 @@ public class RowLogConsumerTests : IAsyncLifetime
 
 		var factory = new TestDbContextFactory(_options);
 		var logger = NullLogger<RowLogConsumer<AppDbContext>>.Instance;
-		_consumer = new OrderLineConsumer(factory, logger);
+		_consumer = new OrderLineConsumer(factory, logger, output);
 	}
 
 	public async Task DisposeAsync()
@@ -38,18 +39,18 @@ public class RowLogConsumerTests : IAsyncLifetime
 		// First batch of random data
 		await AddRandomOrderWithLinesAsync();
 
-		Console.WriteLine("--- First consumer run ---");
+		output.WriteLine("--- First consumer run ---");
 		await _consumer.ExecuteAsync();
 		var markerAfterFirstRun = await GetMarkerValueAsync();
-		Console.WriteLine($"Marker after first run: OrderLines = {markerAfterFirstRun}");
+		output.WriteLine($"Marker after first run: OrderLines = {markerAfterFirstRun}");
 
 		// Second batch of random data
 		await AddRandomOrderWithLinesAsync();
 
-		Console.WriteLine("--- Second consumer run ---");
+		output.WriteLine("--- Second consumer run ---");
 		await _consumer.ExecuteAsync();
 		var markerAfterSecondRun = await GetMarkerValueAsync();
-		Console.WriteLine($"Marker after second run: OrderLines = {markerAfterSecondRun}");
+		output.WriteLine($"Marker after second run: OrderLines = {markerAfterSecondRun}");
 
 		// Verify that the marker advanced with each run, demonstrating the consumer is tracking new changes
 		Assert.True(markerAfterFirstRun > 0);
