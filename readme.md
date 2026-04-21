@@ -1,6 +1,13 @@
-# Override your DbContext SaveChanges behavior to track changes to select entity types in your applications.
+# Problem Statement
 
-This is inspired by [SQL Server change tracking](https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-tracking-sql-server?view=sql-server-ver16), adapted for PostgreSQL and EF Core. There's no Postgres-specific features used however, so it should work with any relational database provider for EF Core.
+When porting an application from SQL Server to Postgres, I found there was no feature similar to [change tracking](https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-tracking-sql-server?view=sql-server-ver16), which my app relies on.
+
+Since PostgreSQL has a large ecosystem of libraries and extensions, there's probably something very similar out there already. But since I'm in a DIY mindset to begin with, and there are some limitations of SQL Server Change Tracking I'd like to improve on, I'd like to build my own solution rather than look for a strict "port" of original feature.
+
+Specifically, I'd like to track before/after states of select columns. SQL Server Change Tracking doesn't do that, so I wanted to add first-class support that.
+
+I also want this to be a natural part of my EF Core usage, so that it works transparently behind the `SaveChangeAsync` method.
+
 
 ## In a nutshell
 - Implement [IRowLogDbContext](./IRowLogDbContext.cs) on your DbContext. This gives you two tables `RowLog` and `RowLogMarker`.
