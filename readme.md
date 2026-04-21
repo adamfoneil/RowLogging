@@ -20,6 +20,7 @@ I also want this to be a natural part of my EF Core usage, so that it works tran
 ## Next steps
 - Implement a consumer service that inherits from [RowLogConsumer](./RowLogConsumer.cs) to do something with the row log data. This is where you can implement any custom logic that needs to happen when certain changes are detected, such as updating caches and report rollups, triggering notifications or pushing to other message queues. The base class handles the boilerplate of querying for changes and advancing the tracking marker.
 - Use [RowLoggerCleanup](./RowLoggerCleanup.cs) with [Coravel](https://docs.coravel.net) to clean up old change tracking data. This is the closest you get to SQL Server's automatic cleanup of change tracking data.
+- Check the [Tests](https://github.com/adamfoneil/RowLogging/tree/main/RowLogging.Tests) to see examples
 
 ## EF Core Notes
 Be sure to add your own configuration for the `RowLog` and `RowLogMarker` entities in your DbContext `OnModelCreating` method. This is required to set up the relationships and indexes properly. This is not part of the base package since you may want to customize the schema or add additional properties.
