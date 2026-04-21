@@ -12,9 +12,18 @@
     <Description>Inspiried by SQL Server Change Tracking feature</Description>
     <Copyright>Copyright (c) 2026 Adam O'Neil</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PackageReleaseNotes>change-tracking ef-core</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/adamfoneil/RowLogging</RepositoryUrl>
+    <PackageTags>change-tracking; ef-core</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="readme.md">
